@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&family=Space+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/abf15be44c.js" crossorigin="anonymous"></script>
+    <link rel="icon" href="sm.png">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <title>ShitsuMun - Register</title>
+    <style>
+        body {
+            font-family: 'Gowun Batang', sans-serif;
+            background-color: #f2f2f2;
+            display: block;
+            height: 120vh;
+            margin-top: 5%;
+        }
+        h5,h2 {
+            color: rgb(200, 150, 200);
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.7);
+        }
+
+        h2{
+            margin-top: 0;
+        }
+
+        form {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            width: 100%; /* Take full width of the parent container */
+            max-width: 600px;
+            margin-top: 30px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        input[type="text"]:focus, input[type="password"]:focus {
+            border-color: rgb(200, 150, 200);
+            box-shadow: 0 0 5px rgb(200, 150, 200);
+        }
+
+        input[type="submit"] {
+            cursor: pointer;
+            padding: 10px 15px;
+            background-color: rgb(200, 150, 200);
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            font-size: 15px;
+            width: 100%;
+        }
+        input[type="submit"]:hover {
+            background-color: rgba(200, 150, 200, 0.7);
+        }
+        
+        a {
+            display: block;
+            margin-top: 20px;
+            text-decoration: none;
+            text-align: center;
+        }
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column; /* Center vertically and horizontally */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>ShitsuMun <i class="fa-regular fa-comments"></i></h2>
+        <h5>회원가입 <span style="font-family:'Noto Sans JP', sans-serif;">会員登録</span></h5>
+        <form action="register_server.php" method="POST">
+        <label for="username">아이디 ID  </label>
+        <input type="text" id="username" name="username" required>
+
+        <label for="password">비밀번호 <span style="font-family:'Noto Sans JP', sans-serif;">パスワード</span></label>
+        <input type="password" id="password" placeholder="비밀번호를 입력해주세요 パスワードを入力してください" name="password" required>
+
+        <label for="password2">비밀번호 확인 <span style="font-family:'Noto Sans JP', sans-serif;">パスワード確認</span> <span id="check_pass"></span></label>
+        <input type="password" id="password2" placeholder="비밀번호를 확인해주세요 パスワードを確認してください" name="password2" required>
+
+        <label for="nickname">닉네임 <span style="font-family:'Noto Sans JP', sans-serif;">ニックネーム</span></label>
+        <input type="text" id="nickname" name="nickname" required>
+
+        <label for="nationality">국적 선택 <span style="font-family:'Noto Sans JP', sans-serif;">国籍選択:</span></label>
+
+        <select name="nationality" id="nationality" class="custom-select custom-select-lg">
+            <option selected>국적을 선택해주세요 <span style="font-family:'Noto Sans JP', sans-serif;">国籍を選択してください</span></option>
+            <option value="korea">한국</option>
+            <option value="japan" style="font-family:'Noto Sans JP', sans-serif;">日本</option>
+        </select>
+        <br>
+        <br>
+        <input type="submit" value="가입하기 登録する">
+        <a href="index.html" id="login">로그인<span style="font-family:'Noto Sans JP', sans-serif;"> ログイン</span></a>
+    </form>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $("form").on("submit", function (e) {
+                var username = $("#username").val();
+                var password = $("#password").val();
+                var nickname = $("#nickname").val();
+    
+                if (username.length > 20 || password.length > 20 || nickname.length > 20) {
+                    alert("아이디, 비밀번호, 닉네임은 20자를 초과할 수 없습니다.");
+                    e.preventDefault(); // 폼 제출을 막습니다.
+                }
+            });
+    
+            $("#password2").keyup(function () {
+                var password = $("#password").val();
+                var confirmPassword = $("#password2").val();
+    
+                if (password !== confirmPassword) {
+                    $("#check_pass").text("비밀번호가 같지 않습니다").css("color", "red");
+                } 
+                else if (password === confirmPassword) {
+                    $("#check_pass").text("비밀번호가 같습니다").css("color", "green");
+                }
+                else {
+                    $("#check_pass").text("");
+                }
+            });
+        });
+    </script>
+    
+</body>
+</html>
